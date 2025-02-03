@@ -44,20 +44,23 @@ oppenheimer_posts <- oppenheimer_posts %>%
   mutate(movie = "oppenheimer")
 # bind rows to make a single dataset
 barbie_oppenheimer <- rbind(barbie_posts, oppenheimer_posts)
-freq(barbie_oppenheimer$movie)
+table(barbie_oppenheimer$movie)
 # add row number variable
-
+barbie_oppenheimer <- barbie_oppenheimer %>%
+  mutate(row_number = row_number()) %>%
+  select(row_number, everything())
 ```
 note: binding is a way of merging data (there are other ways)
-
 
 # Basic operations and preprocessing
 
 ## corpus
 ```{r}
 #creating corpus
-
+corpus <- corpus(barbie_oppenheimer$Post.Text)
 #assigning names to each document
+docnames(corpus) <- barbie_oppenheimer$row_number
+corpus
 ```
 
 ```{r}
